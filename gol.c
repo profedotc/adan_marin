@@ -5,6 +5,8 @@
 
 void gol_init(struct gol *gol)
 {
+	gol->mundo_actual = 0;
+
 	// TODO: Poner el mundo a false
 	for (int a = 0; a < TAM_A; a++)
 	{
@@ -27,6 +29,7 @@ void gol_init(struct gol *gol)
 	gol->mundos[0][2][0] = 1;
 	gol->mundos[0][2][1] = 1;
 	gol->mundos[0][2][2] = 1;
+	
 }
 
 void gol_print(const struct gol *gol)
