@@ -3,6 +3,9 @@
 #include <stdbool.h>
 #include "gol.h"
 
+static int count_neighbors(const struct gol *gol, int x, int y);
+static bool get_cell(const struct gol *gol, int x, int y);
+
 void gol_init(struct gol *gol)
 {
 	gol->mundo_actual = 0;
@@ -29,7 +32,6 @@ void gol_init(struct gol *gol)
 	gol->mundos[0][2][0] = 1;
 	gol->mundos[0][2][1] = 1;
 	gol->mundos[0][2][2] = 1;
-	
 }
 
 void gol_print(const struct gol *gol)
@@ -75,9 +77,9 @@ void gol_step(struct gol *gol)
 	{
 		for(int y = 0; y < TAM_Y; y++)
 		{
-			vecinas_vivas = gol_count_neighbors(gol, x, y);
+			vecinas_vivas = count_neighbors(gol, x, y);
 
-			if (gol_get_cell(gol, x, y))
+			if (get_cell(gol, x, y))
 			{
 				gol->mundos[!gol->mundo_actual][x][y] = (vecinas_vivas == 3) || (vecinas_vivas == 2);
 			}
@@ -91,26 +93,26 @@ void gol_step(struct gol *gol)
 	gol->mundo_actual = !gol->mundo_actual;
 }
 
-int gol_count_neighbors(const struct gol *gol, int x, int y)
+static int count_neighbors(const struct gol *gol, int x, int y)
 {
 	// Devuelve el nÃºmero de vecinos
 	int total_vecinas_vivas = 0;
 
-	total_vecinas_vivas += gol_get_cell(gol, x - 1, y - 1);
-	total_vecinas_vivas += gol_get_cell(gol, x - 1, y);
-	total_vecinas_vivas += gol_get_cell(gol, x - 1, y + 1);
+	total_vecinas_vivas += get_cell(gol, x - 1, y - 1);
+	total_vecinas_vivas += get_cell(gol, x - 1, y);
+	total_vecinas_vivas += get_cell(gol, x - 1, y + 1);
 
-	total_vecinas_vivas += gol_get_cell(gol, x, y - 1);
-	total_vecinas_vivas += gol_get_cell(gol, x, y + 1);
+	total_vecinas_vivas += get_cell(gol, x, y - 1);
+	total_vecinas_vivas += get_cell(gol, x, y + 1);
 
-	total_vecinas_vivas += gol_get_cell(gol, x + 1, y - 1);
-	total_vecinas_vivas += gol_get_cell(gol, x + 1, y);
-	total_vecinas_vivas += gol_get_cell(gol, x + 1, y + 1);
+	total_vecinas_vivas += get_cell(gol, x + 1, y - 1);
+	total_vecinas_vivas += get_cell(gol, x + 1, y);
+	total_vecinas_vivas += get_cell(gol, x + 1, y + 1);
 	
 	return total_vecinas_vivas;
 }
 
-bool gol_get_cell(const struct gol *gol, int x, int y)
+static bool get_cell(const struct gol *gol, int x, int y)
 {
 	/*
 	 * TODO: Devuelve el estado de la cÃ©lula de posiciÃ³n indicada
@@ -124,4 +126,4 @@ bool gol_get_cell(const struct gol *gol, int x, int y)
 	{
 		return gol->mundos[gol->mundo_actual][x][y];
 	}
-}
+}	
