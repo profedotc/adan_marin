@@ -9,6 +9,11 @@ int main()
 
 	// TODO: Declara dos mundos
 	struct gol gol;
+	
+	bool success = gol_alloc(&gol, TAM_X, TAM_Y);
+	if (!success) {
+		EXIT_FAILURE;
+	}
 
 	// TODO: inicializa el mundo
 	gol_init(&gol);
@@ -24,6 +29,8 @@ int main()
 		gol_step(&gol);
 	}
 	while (getchar() != 'q');
+	
+	gol_free(&gol);
 
 	return 0;
 }
