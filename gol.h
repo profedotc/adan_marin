@@ -3,17 +3,24 @@
 #define _GOL_H_
 #include <stdbool.h>
 
-#define TAM_A 2
 #define TAM_X 10
 #define TAM_Y 10
 
 struct gol {
-	bool mundos[TAM_A][TAM_X][TAM_Y];
-	unsigned int mundo_actual;
+	bool **worlds[2];
+	int size_x;
+	int size_y;
+};
+
+enum current_world {
+	CURRENT,
+	NEXT
 };
 
 void gol_init(struct gol *gol);
 void gol_print(const struct gol *gol);
 void gol_step(struct gol *gol);
+bool gol_alloc(struct gol *gol, int size_x, int size_y);
+void gol_free(struct gol *gol);
 
 #endif
